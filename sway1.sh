@@ -1,4 +1,24 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+# Copyright 2022 Elijah Danko
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 # Archlinux sway windows manager minimal installation.
 # Wireless network is required.
@@ -6,7 +26,10 @@
 #
 # Step 1. Preapre a hard drive.
 
-set -e
+set -euo pipefail
+
+script_name="$(readlink -f "${BASH_SOURCE[0]}")"
+script_dir="$(dirname "$script_name")"
 
 ip link
 # iwctl device list
@@ -48,8 +71,11 @@ cp -R /var/lib/iwd /mnt/var/lib/iwd
 # Allow to use sudo.
 sed -i -E 's/^#\s+%wheel\s+ALL(.*)/%wheel ALL\1/g' /mnt/etc/sudoers
 # Save partition for further luks setup.
+# Ignore shellcheck warn (Don't use ls...). It's workaround: taking symlink uuid
+# info by a device name pattern.
 ls -l /dev/disk/by-uuid | grep sda2 | awk '{print $9}' > /mnt/crypto_partition
 
 mkdir /mnt/hostlvm
 mount --bind /run/lvm /mnt/hostlvm
+cp "$script_dir/sway2.sh" /mnt/sway2.sh
 arch-chroot /mnt

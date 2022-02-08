@@ -1,4 +1,24 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+# Copyright 2022 Elijah Danko
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 # Archlinux sway windows manager minimal installation.
 # Wireless network is required.
@@ -6,15 +26,16 @@
 
 # Step 2: Download and setup system.
 
-set -e
+set -euo pipefail
+
+script_name="$(readlink -f "${BASH_SOURCE[0]}")"
 
 ln -s /hostlvm /run/lvm || true
-
 timedatectl set-ntp true
 
 pacman -Syyu  --noconfirm
 pacman -S linux linux-firmware intel-ucode lvm2 grub net-tools inetutils man \
-    iwd gnu-free-fonts sway alacritty firefox openssh git --noconfirm
+    p7zip iwd gnu-free-fonts sway alacritty firefox openssh git --noconfirm
 
 ln -sf /usr/share/zoneinfo/Europe/Kiev /etc/localtime
 hwclock --systohc
@@ -34,7 +55,7 @@ echo 'initrd /intel-ucode.img' > /boot/loader/entries/arch.conf
 echo 'initrd /initramfs-linux.img' >> /boot/loader/entries/arch.conf
 
 update_grup() {
-    sed -i -E "s/(^$$1)\"(.*)\"/\1\"cryptdevice=UUID=$(cat /crypto_partition):cryptlvm root=\/dev\/SysVolGroup\/root \2\"/g" /etc/default/grub
+    sed -i -E "s/(^$1)\"(.*)\"/\1\"cryptdevice=UUID=$(cat /crypto_partition):cryptlvm root=\/dev\/SysVolGroup\/root \2\"/g" /etc/default/grub
 }
 
 update_grup "GRUB_CMDLINE_LINUX_DEFAULT="
@@ -72,4 +93,5 @@ systemctl enable systemd-networkd.service
 systemctl enable systemd-resolved.service
 systemctl enable iwd.service
 
+rm -rf "$script_name"
 echo "Done. Please unmount and reboot."
