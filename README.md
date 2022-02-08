@@ -1,4 +1,4 @@
-Automating scripts to setup a operating system
+Automating scripts to setup an operating system
 
 # Sway
 
