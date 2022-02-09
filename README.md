@@ -4,8 +4,8 @@ Automating scripts to setup an operating system
 
 Archlinux minimalistic setup of Sway Windows Manager.
 
-Since Sway WM uses Wayland bindings, make sure your video adapter is Wayland
-compatible.
+Since Sway WM uses Wayland bindings, make sure your video adapter has good
+Wayland compatibility.
 
 ## Content
 - sway1.sh - Prepare a hard drive. It uses luks over lvm to enrypt a disk

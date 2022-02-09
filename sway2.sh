@@ -81,7 +81,9 @@ user_home="/home/$username"
 sway_config_dir="$user_home/.config/sway"
 mkdir -p "$sway_config_dir"
 cp /etc/sway/config "$sway_config_dir"
-sed -i -E "s/(set \$term)\s+(\w+)/\1 alacritty/" "$sway_config_dir"/config
+# Ignore shellcheck "Expressions don't expand in single quotes" warn.
+# $term is a valid string.
+sed -i -E 's/(set $term)\s+(\w+)/\1 alacritty/' "$sway_config_dir"/config
 chown "$username":users -R "$user_home"/.config
 
 cat <<EOF >> "$user_home"/.zprofile
