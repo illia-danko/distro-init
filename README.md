@@ -34,3 +34,7 @@ Wayland compatible.
 - `bash sway1.sh`
 -  When sway1.sh installation completed by coping sway2.sh to the mounted
    system, then run `bash sway2.sh`
+
+# License
+
+MIT
