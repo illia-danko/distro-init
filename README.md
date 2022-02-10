@@ -1,6 +1,6 @@
 Automating scripts to setup an operating system
 
-Q: If disaster happened, how fast you can recover the system?
+Q: If disaster happened, how fast you can recover the system?<br/>
 A: Me: from absolute zero to the complete functional system - 20 minutes (assume
 having USB live sticker).
 
