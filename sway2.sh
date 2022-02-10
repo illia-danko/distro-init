@@ -43,11 +43,13 @@ echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 echo 'LANG="en_US.UTF-8"' > /etc/locale.conf
 locale-gen
 echo pc >> /etc/hostname
+echo "Root password: "
 passwd
 
 printf "Enter user name: "
 read -r username
 useradd -m -g users -G wheel,storage,power -s /bin/zsh "$username"
+echo "$username password: "
 passwd "$username"
 
 mkdir -p /boot/loader/entries
@@ -83,7 +85,7 @@ mkdir -p "$sway_config_dir"
 cp /etc/sway/config "$sway_config_dir"
 # Ignore shellcheck "Expressions don't expand in single quotes" warn.
 # $term is a valid string.
-sed -i -E 's/(set $term)\s+(\w+)/\1 alacritty/' "$sway_config_dir"/config
+sed -i -E 's/(set \$term)\s+\w+/\1 alacritty/' "$sway_config_dir"/config
 chown "$username":users -R "$user_home"/.config
 
 cat <<EOF >> "$user_home"/.zprofile
