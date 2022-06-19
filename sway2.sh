@@ -35,7 +35,7 @@ timedatectl set-ntp true
 
 pacman -Syyu  --noconfirm
 pacman -S linux linux-firmware intel-ucode lvm2 grub net-tools inetutils man \
-    p7zip iwd gnu-free-fonts sway alacritty firefox openssh git --noconfirm
+    p7zip iwd gnu-free-fonts polkit sway alacritty firefox openssh git --noconfirm
 
 ln -sf /usr/share/zoneinfo/Europe/Kiev /etc/localtime
 hwclock --systohc
