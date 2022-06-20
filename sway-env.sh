@@ -37,7 +37,7 @@ pacman -Syyu  --noconfirm
 pacman -S linux linux-firmware intel-ucode lvm2 grub net-tools inetutils man \
     p7zip iwd gnu-free-fonts polkit sway alacritty firefox openssh git --noconfirm
 
-ln -sf /usr/share/zoneinfo/Europe/Kiev /etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
 hwclock --systohc
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 echo 'LANG="en_US.UTF-8"' > /etc/locale.conf

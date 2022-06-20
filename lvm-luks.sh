@@ -20,11 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# Archlinux sway windows manager minimal installation.
+# Archlinux installation over luks password encryption.
 # Wireless network is required.
-# Encrypt system with luks.
-#
-# Step 1. Preapre a hard drive.
 
 set -euo pipefail
 
@@ -77,5 +74,5 @@ ls -l /dev/disk/by-uuid | grep sda2 | awk '{print $9}' > /mnt/crypto_partition
 
 mkdir /mnt/hostlvm
 mount --bind /run/lvm /mnt/hostlvm
-cp "$script_dir/sway2.sh" /mnt/sway2.sh
+cp "$script_dir"/*env.sh /mnt/
 arch-chroot /mnt
