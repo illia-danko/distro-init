@@ -10,13 +10,6 @@ How?
 - step2 (optional): download from some very secret place SSH secrets.
 - step3: initialize the system via dotfiles script.
 
-# Sway
-
-Archlinux minimalistic setup of Sway Windows Manager.
-
-Since Sway WM uses Wayland bindings, make sure your video adapter is
-Wayland compatible.
-
 ## Content
 - lvm-luks.sh - prepare a hard drive. Install linux over lvm + luks hard
   drive encryption.
@@ -31,7 +24,20 @@ Wayland compatible.
 - `pacman -S git`
 - `git clone https://github.com/elijahdanko/distro-init.git`
 - `cd distro-init; bash lvm-luks.sh`
-- When lvm-luks.sh is finished, run `bash <your_env>.sh` to finish installation.
+- When [lvm-luks.sh](/lvm-luks.sh) is finished, run `bash <your_env>.sh` to finish installation.
+
+## Environments
+
+### [Sway](/sway-env.sh)
+
+Archlinux minimalistic setup of Sway Windows Manager.
+
+Since Sway WM uses Wayland bindings, make sure your video adapter is
+Wayland compatible.
+
+### [Gnome3](/gnome3-env.sh)
+
+Bloated, feature-full Desktop Environment.
 
 # License
 
