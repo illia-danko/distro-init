@@ -23,7 +23,7 @@ How?
 - Boot the system from memory via Archlinux USB stick.
 - `pacman -Syy`
 - `pacman -S git`
-- `git clone https://github.com/elijahdanko/distro-init.git`
+- `git clone https://github.com/illia-danko/distro-init.git`
 - `cd distro-init; bash lvm-luks.sh`
 - When [lvm-luks.sh](/lvm-luks.sh) is finished, run `bash <your_env>.sh` to finish installation.
 
