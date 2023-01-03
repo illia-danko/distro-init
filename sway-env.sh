@@ -35,7 +35,7 @@ timedatectl set-ntp true
 
 pacman -Syyu  --noconfirm
 pacman -S linux linux-firmware intel-ucode lvm2 grub net-tools inetutils man \
-    p7zip iwd gnu-free-fonts polkit sway alacritty firefox openssh git --noconfirm
+    p7zip iwd gnu-free-fonts polkit sway foot firefox openssh git --noconfirm
 
 ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
 hwclock --systohc
@@ -85,7 +85,7 @@ mkdir -p "$sway_config_dir"
 cp /etc/sway/config "$sway_config_dir"
 # Ignore shellcheck "Expressions don't expand in single quotes" warn.
 # $term is a valid string.
-sed -i -E 's/(set \$term)\s+\w+/\1 alacritty/' "$sway_config_dir"/config
+sed -i -E 's/(set \$term)\s+\w+/\1 foot/' "$sway_config_dir"/config
 chown "$username":users -R "$user_home"/.config
 
 cat <<EOF >> "$user_home"/.zprofile
