@@ -31,7 +31,6 @@ set -euo pipefail
 script_name="$(readlink -f "${BASH_SOURCE[0]}")"
 
 ln -s /hostlvm /run/lvm || true
-timedatectl set-ntp true
 
 pacman -Syyu  --noconfirm
 pacman -S linux linux-firmware intel-ucode lvm2 grub man p7zip firefox \
