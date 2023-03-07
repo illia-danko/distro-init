@@ -8,10 +8,10 @@
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in
 # all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# Archlinux sway windows manager minimal installation.
+# Archlinux sway installation.
 # Wireless network is required.
 # Encrypt system with luks.
 
@@ -33,8 +33,9 @@ script_name="$(readlink -f "${BASH_SOURCE[0]}")"
 ln -s /hostlvm /run/lvm || true
 
 pacman -Syyu  --noconfirm
-pacman -S linux linux-firmware intel-ucode lvm2 grub net-tools inetutils man \
-    p7zip iwd gnu-free-fonts polkit sway foot firefox openssh git --noconfirm
+pacman -S linux linux-firmware intel-ucode lvm2 grub man p7zip firefox \
+    openssh git networkmanager nm-connection-editor gnu-free-fonts polkit sway alacritty \
+    network-manager-applet wpa_supplicant bluez bluez-utils --noconfirm
 
 ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
 hwclock --systohc
@@ -68,16 +69,6 @@ grub-mkconfig -o /boot/grub/grub.cfg
 sed -i -E 's/(^HOOKS.*)block(.*)/\1block encrypt lvm2 keymap\2/g' /etc/mkinitcpio.conf
 mkinitcpio -p linux
 
-wlan_iface="$(iwctl device list | tail -n2 | head -n1 | awk '{print $1}')"
-cat <<EOF > /etc/systemd/network/25-wireless.network
-[Match]
-Name=$wlan_iface
-
-[Network]
-DHCP=yes
-IgnoreCarrierLoss=3s
-EOF
-
 user_home="/home/$username"
 sway_config_dir="$user_home/.config/sway"
 mkdir -p "$sway_config_dir"
@@ -92,9 +83,8 @@ cat <<EOF >> "$user_home"/.zprofile
 EOF
 chown "$username":users "$user_home"/.zprofile
 
-systemctl enable systemd-networkd.service
-systemctl enable systemd-resolved.service
-systemctl enable iwd.service
+systemctl enable bluetooth.service
+systemctl enable NetworkManager.service
 
 rm -rf "$script_name"
 echo "Done. Please unmount and reboot."
