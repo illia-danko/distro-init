@@ -33,11 +33,11 @@ script_name="$(readlink -f "${BASH_SOURCE[0]}")"
 ln -s /hostlvm /run/lvm || true
 
 pacman -Syyu  --noconfirm
-pacman -S linux linux-firmware intel-ucode lvm2 grub man p7zip firefox \
+pacman -S linux linux-firmware intel-ucode lvm2 grub man unzip zip firefox \
     openssh git networkmanager nm-connection-editor gnu-free-fonts polkit sway alacritty \
     network-manager-applet wpa_supplicant bluez bluez-utils --noconfirm
 
-ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Kiev /etc/localtime
 hwclock --systohc
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 echo 'LANG="en_US.UTF-8"' > /etc/locale.conf
@@ -75,7 +75,7 @@ mkdir -p "$sway_config_dir"
 cp /etc/sway/config "$sway_config_dir"
 # Ignore shellcheck "Expressions don't expand in single quotes" warn.
 # $term is a valid string.
-sed -i -E 's/(set \$term)\s+\w+/\1 foot/' "$sway_config_dir"/config
+sed -i -E 's/(set \$term)\s+\w+/\1 alacritty/' "$sway_config_dir"/config
 chown "$username":users -R "$user_home"/.config
 
 cat <<EOF >> "$user_home"/.zprofile
