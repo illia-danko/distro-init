@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-# Archlinux sway installation.
+# Archlinux i3 installation.
 # Wireless network is required.
 # Encrypt system with luks.
 
@@ -33,8 +33,8 @@ script_name="$(readlink -f "${BASH_SOURCE[0]}")"
 ln -s /hostlvm /run/lvm || true
 
 pacman -Syyu  --noconfirm
-pacman -S linux linux-firmware intel-ucode lvm2 grub man unzip zip firefox \
-    openssh git networkmanager nm-connection-editor gnu-free-fonts polkit sway alacritty \
+pacman -S linux linux-firmware intel-ucode xorg-xinit lvm2 grub man unzip zip firefox \
+    openssh git networkmanager nm-connection-editor gnu-free-fonts polkit i3 alacritty \
     network-manager-applet wpa_supplicant bluez bluez-utils --noconfirm
 
 ln -sf /usr/share/zoneinfo/Europe/Kiev /etc/localtime
@@ -70,18 +70,16 @@ sed -i -E 's/(^HOOKS.*)block(.*)/\1block encrypt lvm2 keymap\2/g' /etc/mkinitcpi
 mkinitcpio -p linux
 
 user_home="/home/$username"
-config_dir="$user_home/.config/sway"
+config_dir="$user_home/.config/i3"
 mkdir -p "$config_dir"
-cp /etc/sway/config "$config_dir"
+cp /etc/i3/config "$config_dir"
 # Ignore shellcheck "Expressions don't expand in single quotes" warn.
 # $term is a valid string.
 sed -i -E 's/(set \$term)\s+\w+/\1 alacritty/' "$config_dir"/config
 chown "$username":users -R "$user_home"/.config
 
-cat <<EOF >> "$user_home"/.zprofile
-[ "$(tty)" = "/dev/tty1" ] && [ -x "$(command -v sway)" ] && exec sway
-EOF
-chown "$username":users "$user_home"/.zprofile
+cp /etc/X11/xinit/xinitrc "$user_home"/.xinitrc
+echo "startx /usr/bin/i3" >> "$user_home"/.xinitrc
 
 systemctl enable bluetooth.service
 systemctl enable NetworkManager.service
