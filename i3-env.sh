@@ -33,7 +33,7 @@ script_name="$(readlink -f "${BASH_SOURCE[0]}")"
 ln -s /hostlvm /run/lvm || true
 
 pacman -Syyu  --noconfirm
-pacman -S linux linux-firmware intel-ucode xorg-xinit lvm2 grub man unzip zip firefox \
+pacman -S linux linux-firmware intel-ucode xorg-xinit xorg-server xterm lvm2 grub man unzip zip firefox \
     openssh git networkmanager nm-connection-editor gnu-free-fonts polkit i3 alacritty \
     network-manager-applet wpa_supplicant bluez bluez-utils --noconfirm
 
@@ -78,8 +78,9 @@ cp /etc/i3/config "$config_dir"
 sed -i -E 's/(set \$term)\s+\w+/\1 alacritty/' "$config_dir"/config
 chown "$username":users -R "$user_home"/.config
 
-cp /etc/X11/xinit/xinitrc "$user_home"/.xinitrc
-echo "startx /usr/bin/i3" >> "$user_home"/.xinitrc
+cat <<EOF >> "$user_home"/.xinitrc
+[ "$(tty)" = "/dev/tty1" ] && [ -x "$(command -v i3)" ] && startx /usr/bin/i3
+EOF
 
 systemctl enable bluetooth.service
 systemctl enable NetworkManager.service
