@@ -33,7 +33,7 @@ script_name="$(readlink -f "${BASH_SOURCE[0]}")"
 ln -s /hostlvm /run/lvm || true
 
 pacman -Syyu  --noconfirm
-pacman -S linux linux-firmware intel-ucode xorg-xinit xorg-server xterm lvm2 grub man unzip zip firefox \
+pacman -S linux linux-firmware intel-ucode xorg-xinit xorg-server xorg-xrandr xterm lvm2 grub man unzip zip firefox \
     openssh git networkmanager nm-connection-editor gnu-free-fonts polkit i3 alacritty \
     network-manager-applet wpa_supplicant bluez bluez-utils --noconfirm
 
