@@ -33,11 +33,12 @@ script_name="$(readlink -f "${BASH_SOURCE[0]}")"
 ln -s /hostlvm /run/lvm || true
 
 pacman -Syyu  --noconfirm
-pacman -S linux linux-firmware intel-ucode lvm2 grub man p7zip firefox \
-    openssh git xorg xorg-server gnome gdm networkmanager nm-connection-editor \
-    network-manager-applet wpa_supplicant bluez bluez-utils --noconfirm
+pacman -S linux linux-firmware intel-ucode lvm2 grub man p7zip zip unzip firefox \
+    openssh git xorg alacritty xorg-server gnome gnome-extra gdm networkmanager \
+    nm-connection-editor network-manager-applet wpa_supplicant bluez bluez-utils \
+    --noconfirm
 
-ln -sf /usr/share/zoneinfo/Europe/Warsaw /etc/localtime
+ln -sf /usr/share/zoneinfo/Europe/Kiev /etc/localtime
 hwclock --systohc
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 echo 'LANG="en_US.UTF-8"' > /etc/locale.conf
