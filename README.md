@@ -1,4 +1,4 @@
-Automating scripts to setup an operating system
+Automating scripts to setup an operating system (for Archlinux only)
 
 Q: If disaster happened, how fast you can recover the system?<br/>
 A: Me: from absolute zero to the complete functional system - 20 minutes (assume
@@ -11,6 +11,7 @@ How?
 - step3: initialize the system via dotfiles script.
 
 ## Environments
+
 - lvm-luks.sh - prepare a hard drive. Install linux over lvm + luks hard
   drive encryption.
 - sway-env.sh - install sway wm with a default configuration along with alacritty
